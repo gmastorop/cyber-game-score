@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ενημέρωση Σκορ...</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .container {
+      text-align: center;
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+    .icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: spin 1s linear infinite;
+    }
+    
+    .message {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .score-change {
+      font-size: 48px;
+      font-weight: bold;
+      color: #FFD700;
+      margin-top: 20px;
+      animation: pulse 0.8s ease-in-out infinite;
+    }
+    
+    .redirecting {
+      font-size: 16px;
+      opacity: 0.8;
+      margin-top: 20px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">⚡</div>
+    <div class="message" id="message">Ενημέρωση σκορ...</div>
+    <div class="score-change" id="scoreChange"></div>
+    <div class="redirecting">Μεταφορά στην επόμενη σελίδα...</div>
+  </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const points = parseInt(urlParams.get('points')) || 0;
+    const nextPage = urlParams.get('next') || '';
+    const reset = urlParams.get('reset') === 'true';
+    
+    // Get current score from localStorage
+    let currentScore = parseInt(localStorage.getItem('cyberGameScore')) || 0;
+    
+    // Handle reset
+    if (reset) {
+      localStorage.setItem('cyberGameScore', '0');
+      currentScore = 0;
+      document.getElementById('message').textContent = 'Επαναφορά σκορ...';
+      document.getElementById('scoreChange').textContent = 'Νέο Παιχνίδι!';
+    } 
+    // Add points
+    else {
+      currentScore += points;
+      localStorage.setItem('cyberGameScore', currentScore);
+      
+      // Update display
+      if (points > 0) {
+        document.getElementById('message').textContent = 'Συγχαρητήρια! ✅';
+        document.getElementById('scoreChange').textContent = '+' + points + ' πόντοι!';
+      } else {
+        document.getElementById('message').textContent = 'Προσπάθησε ξανά! 💪';
+        document.getElementById('scoreChange').textContent = 'Κανένας πόντος αυτή τη φορά';
+      }
+    }
+    
+    // Redirect after 1.2 seconds
+    setTimeout(() => {
+      if (nextPage) {
+        window.location.href = decodeURIComponent(nextPage);
+      } else {
+        window.history.back();
+      }
+    }, 1200);
+  </script>
+</body>
+</html>

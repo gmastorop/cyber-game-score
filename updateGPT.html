@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Ενημέρωση Σκορ...</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+<span id="msg">Ενημέρωση...</span>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const points = parseInt(params.get("points")) || 0;
+  const reset = params.get("reset") === "true";
+  const next = params.get("next") || "";
+
+  // Στέλνουμε μήνυμα στο PARENT (Genially)
+  window.parent.postMessage(
+    {
+      cyberGameMessage: true,
+      reset,
+      points,
+    },
+    "*"
+  );
+
+  document.getElementById("msg").textContent =
+    reset ? "Μηδενισμός σκορ..." : `Αλλαγή σκορ: ${points}`;
+
+  // Μικρή καθυστέρηση για να προλάβει το postMessage
+  setTimeout(() => {
+    if (next) window.location.href = next;
+    else window.history.back();
+  }, 600);
+</script>
+
+</body>
+</html>

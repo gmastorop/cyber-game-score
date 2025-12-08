@@ -39,10 +39,21 @@
     reset ? "Μηδενισμός σκορ..." : `Αλλαγή σκορ: ${points}`;
 
   // Μικρή καθυστέρηση για να προλάβει το postMessage
-  setTimeout(() => {
-    if (next) window.location.href = next;
-    else window.history.back();
-  }, 600);
+
+  // προσωρινά ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ για debugging
+/*
+setTimeout(() => {
+  if (next) {
+    window.location.href = next;
+  } else {
+    window.history.back();
+  }
+}, 600);
+*/
+console.log("DEBUG MODE — no redirect");
+ 
+
+  
 </script>
 
 </body>

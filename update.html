@@ -9,18 +9,18 @@
 const params = new URLSearchParams(location.search);
 let points = parseInt(params.get("points")) || 0;
 
+// Get current score from localStorage
+let score = parseInt(localStorage.getItem("cyberScore") || "0");
+
+// Update score
+score += points;
+
+// Save back to localStorage
+localStorage.setItem("cyberScore", score);
+
 // Show message
 document.getElementById("msg").textContent =
   points >= 0 ? `+${points} points` : `${points} points`;
-
-// SEND the EXACT message score.html expects
-window.parent.postMessage(
-  {
-    scoreUpdate: true,
-    amount: points
-  },
-  "*"
-);
 
 // return to previous page
 setTimeout(() => {

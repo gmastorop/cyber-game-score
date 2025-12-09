@@ -9,36 +9,22 @@
 const params = new URLSearchParams(location.search);
 let points = parseInt(params.get("points")) || 0;
 
-// Try to get current score from localStorage OR from URL hash
+// Get current score from localStorage
 let score = parseInt(localStorage.getItem("cyberScore") || "0");
-
-// Also check if there's a score in the hash from a previous page
-if (location.hash) {
-  const hashScore = parseInt(location.hash.substring(1));
-  if (!isNaN(hashScore)) {
-    score = hashScore;
-  }
-}
 
 // Update score
 score += points;
 
-// Save to localStorage
+// Save back to localStorage
 localStorage.setItem("cyberScore", score);
 
 // Show message
 document.getElementById("msg").textContent =
   points >= 0 ? `+${points} points` : `${points} points`;
 
-// Return to previous page WITH the score in the hash
+// Close tab after showing message
 setTimeout(() => {
-  if (history.length > 1) {
-    // Try to pass score back via hash
-    history.back();
-  } else {
-    // Or redirect to score page with the current score
-    window.location.href = `score.html#${score}`;
-  }
+  window.close();
 }, 600);
 </script>
 

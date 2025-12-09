@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html lang="el">
+<html>
 <meta charset="UTF-8">
 <body style="font-family:Segoe UI; display:flex; justify-content:center; align-items:center; height:100vh;">
 
-<div id="msg" style="font-size:28px; color:#333;"></div>
+<div id="msg" style="font-size:28px; color:#333;">Updating…</div>
 
 <script>
-const p = new URLSearchParams(location.search);
-const amount = parseInt(p.get("points") || "0");
+const params = new URLSearchParams(location.search);
+let points = parseInt(params.get("points")) || 0;
 
-// Δείξε το μήνυμα
-document.getElementById("msg").textContent = 
-  amount >= 0 
-  ? `+${amount} πόντοι` 
-  : `${amount} πόντοι`;
+// Show message
+document.getElementById("msg").textContent =
+  points >= 0 ? `+${points} points` : `${points} points`;
 
-// Στείλε μήνυμα στο score.html (iframe)
+// SEND the EXACT message score.html expects
 window.parent.postMessage(
-  { scoreUpdate: true, amount: amount },
+  {
+    scoreUpdate: true,
+    amount: points
+  },
   "*"
 );
 
-// Μικρή παύση και κλείσιμο/επιστροφή
+// return to previous page
 setTimeout(() => {
   if (history.length > 1) history.back();
 }, 600);

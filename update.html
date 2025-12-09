@@ -8,6 +8,14 @@
 <script>
 const params = new URLSearchParams(location.search);
 let points = parseInt(params.get("points")) || 0;
+let add = params.get("add"); // θα είναι "true", "false", ή null
+
+// Αν add=false ή add=False, αφαιρούμε πόντους
+if (add === "false" || add === "False") {
+  points = -Math.abs(points); // σιγουρευόμαστε ότι είναι αρνητικό
+} else {
+  points = Math.abs(points); // σιγουρευόμαστε ότι είναι θετικό
+}
 
 // Get current score from localStorage
 let score = parseInt(localStorage.getItem("cyberScore") || "0");

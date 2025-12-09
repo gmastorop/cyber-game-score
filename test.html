@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="el">
+<meta charset="UTF-8">
+<body style="font-family:Segoe UI; display:flex; justify-content:center; align-items:center; height:100vh;">
+
+<div id="msg" style="font-size:28px; color:#333;"></div>
+
+<script>
+const p = new URLSearchParams(location.search);
+const amount = parseInt(p.get("points") || "0");
+
+// Δείξε το μήνυμα
+document.getElementById("msg").textContent = 
+  amount >= 0 
+  ? `+${amount} πόντοι` 
+  : `${amount} πόντοι`;
+
+// Στείλε μήνυμα στο score.html (iframe)
+window.parent.postMessage(
+  { scoreUpdate: true, amount: amount },
+  "*"
+);
+
+// Μικρή παύση και κλείσιμο/επιστροφή
+setTimeout(() => {
+  if (history.length > 1) history.back();
+}, 600);
+</script>
+
+</body>
+</html>

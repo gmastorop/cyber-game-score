@@ -54,41 +54,37 @@ html, body {
 </head>
 <body>
 
+<!-- SCORE BADGE -->
 <div id="score-badge">
   <div class="trophy">🏆</div>
   <div class="score">0</div>
 </div>
 
 <script>
-// Read score from localStorage
+// ---------------------------------------------------------------------
+// 1) Διαβάζουμε το σκορ από localStorage (GitHub domain)
+// ---------------------------------------------------------------------
 let score = parseInt(localStorage.getItem("cyberScore") || "0");
-
-// If there's a score in the URL hash, use that instead and save it
-if (location.hash) {
-  const hashScore = parseInt(location.hash.substring(1));
-  if (!isNaN(hashScore)) {
-    score = hashScore;
-    localStorage.setItem("cyberScore", score);
-  }
-}
-
 document.querySelector(".score").textContent = score;
 
-// Listen for messages (in case parent frame sends updates)
+
+// ---------------------------------------------------------------------
+// 2) Ακούμε μηνύματα από update.html
+// ---------------------------------------------------------------------
 window.addEventListener("message", (event) => {
   if (event.data.scoreUpdate) {
     score += event.data.amount;
-    localStorage.setItem("cyberScore", score);
     document.querySelector(".score").textContent = score;
   }
 
   if (event.data.scoreReset) {
     score = 0;
-    localStorage.setItem("cyberScore", "0");
     document.querySelector(".score").textContent = 0;
   }
 });
+
+
+  
 </script>
 
 </body>
-</html>

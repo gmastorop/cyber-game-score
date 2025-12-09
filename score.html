@@ -72,18 +72,17 @@ document.querySelector(".score").textContent = score;
 // 2) Ακούμε μηνύματα από update.html
 // ---------------------------------------------------------------------
 window.addEventListener("message", (event) => {
-
   if (event.data.scoreUpdate) {
-    let score = parseInt(localStorage.getItem("cyberScore") || "0");
     score += event.data.amount;
-    localStorage.setItem("cyberScore", score);
-
-    // update onscreen number
-    const el = document.querySelector(".score");
-    el.textContent = score;
+    document.querySelector(".score").textContent = score;
   }
 
+  if (event.data.scoreReset) {
+    score = 0;
+    document.querySelector(".score").textContent = 0;
+  }
 });
+
 
   
 </script>

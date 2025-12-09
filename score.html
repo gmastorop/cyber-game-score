@@ -72,24 +72,20 @@ document.querySelector(".score").textContent = score;
 // 2) Ακούμε μηνύματα από update.html
 // ---------------------------------------------------------------------
 window.addEventListener("message", (event) => {
-  
-  // Ελέγχουμε ότι το μήνυμα είναι αυτό που θέλουμε
-  if (!event.data || !event.data.scoreUpdate) return;
-  
-  // Προσθέτουμε το ποσό
-  score += event.data.amount;
-  
-  // Αποθηκεύουμε
-  localStorage.setItem("cyberScore", score);
-  
-  // Ενημερώνουμε την οθόνη
-  const el = document.querySelector(".score");
-  el.textContent = score;
-  
-  // Εφέ "pulse"
-  el.classList.add("score-update");
-  setTimeout(() => el.classList.remove("score-update"), 600);
+
+  if (event.data.scoreUpdate) {
+    let score = parseInt(localStorage.getItem("cyberScore") || "0");
+    score += event.data.amount;
+    localStorage.setItem("cyberScore", score);
+
+    // update onscreen number
+    const el = document.querySelector(".score");
+    el.textContent = score;
+  }
+
 });
+
+  
 </script>
 
 </body>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Score</title>
+
+<style>
+html, body {
+  margin: 0; padding: 0;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; 
+  background: transparent;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#score-badge {
+  background: linear-gradient(135deg, #2196F3, #4CAF50);
+  border-radius: 20px;
+  padding: 15px 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  color: white;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.trophy {
+  font-size: 32px;
+  animation: bounce 2s infinite;
+}
+
+.score {
+  font-size: 36px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.15); color: #FFEB3B; }
+}
+
+.score-update { animation: pulse 0.6s ease-in-out; }
+</style>
+
+</head>
+<body>
+
+<!-- SCORE BADGE -->
+<div id="score-badge">
+  <div class="trophy">🏆</div>
+  <div class="score">0</div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------
+// 1) Διαβάζουμε το σκορ από localStorage (GitHub domain)
+// ---------------------------------------------------------------------
+let score = parseInt(localStorage.getItem("cyberScore") || "0");
+document.querySelector(".score").textContent = score;
+
+
+// ---------------------------------------------------------------------
+// 2) Ακούμε μηνύματα από update.html
+// ---------------------------------------------------------------------
+window.addEventListener("message", (event) => {
+  
+  // Ελέγχουμε ότι το μήνυμα είναι αυτό που θέλουμε
+  if (!event.data || !event.data.scoreUpdate) return;
+  
+  // Προσθέτουμε το ποσό
+  score += event.data.amount;
+  
+  // Αποθηκεύουμε
+  localStorage.setItem("cyberScore", score);
+  
+  // Ενημερώνουμε την οθόνη
+  const el = document.querySelector(".score");
+  el.textContent = score;
+  
+  // Εφέ "pulse"
+  el.classList.add("score-update");
+  setTimeout(() => el.classList.remove("score-update"), 600);
+});
+</script>
+
+</body>
+</html>

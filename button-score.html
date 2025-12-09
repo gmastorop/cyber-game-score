@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Score Button</title>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  #score-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+    background: linear-gradient(135deg, #2196F3, #4CAF50);
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    text-decoration: none; /* importante */
+    white-space: nowrap;
+  }
+
+  .trophy {
+    font-size: 26px;
+  }
+</style>
+
+</head>
+<body>
+
+<!-- The clickable button -->
+<a id="score-btn" href="score.html" target="_blank">
+  <span class="trophy">🏆</span>
+  <span>Δείτε το σκορ σας</span>
+</a>
+
+</body>
+</html>

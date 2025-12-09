@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Reset Score</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 28px;
+    color: #333;
+    background: #f5f5f5;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="msg">Νέο παιχνίδι! Σκορ = 0</div>
+
+<script>
+// 🔵 1. Στέλνουμε μήνυμα στο score.html για μηδενισμό
+window.parent.postMessage(
+  { scoreReset: true },
+  "*"
+);
+
+// 🔵 2. Μηδενίζουμε επίσης το localStorage εδώ (fallback)
+localStorage.setItem("cyberScore", 0);
+
+// 🔵 3. Μικρή καθυστέρηση ώστε το score.html να ενημερωθεί
+setTimeout(() => {
+  // Αν ανοίχτηκε από Genially → επιστρέφουμε αυτόματα
+  if (history.length > 1) {
+    history.back();
+  }
+}, 600);
+</script>
+
+</body>
+</html>

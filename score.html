@@ -74,16 +74,16 @@ document.querySelector(".score").textContent = score;
 window.addEventListener("message", (event) => {
   if (event.data.scoreUpdate) {
     score += event.data.amount;
+    localStorage.setItem("cyberScore", score); // ADD THIS LINE
     document.querySelector(".score").textContent = score;
   }
 
   if (event.data.scoreReset) {
     score = 0;
+    localStorage.setItem("cyberScore", "0"); // ADD THIS LINE
     document.querySelector(".score").textContent = 0;
   }
 });
-
-
   
 </script>
 

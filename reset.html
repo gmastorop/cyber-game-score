@@ -32,12 +32,20 @@ window.parent.postMessage(
 localStorage.setItem("cyberScore", 0);
 
 // 🔵 3. Μικρή καθυστέρηση ώστε το score.html να ενημερωθεί
-setTimeout(() => {
-  // Αν ανοίχτηκε από Genially → επιστρέφουμε αυτόματα
-  if (history.length > 1) {
-    history.back();
-  }
+  // Close tab after showing message
+  setTimeout(() => {
+  window.close();
 }, 600);
+  
+//setTimeout(() => {
+  // Αν ανοίχτηκε από Genially → επιστρέφουμε αυτόματα
+//  if (history.length > 1) {
+//    history.back();
+//  }
+//}, 600);
+
+
+  
 </script>
 
 </body>
